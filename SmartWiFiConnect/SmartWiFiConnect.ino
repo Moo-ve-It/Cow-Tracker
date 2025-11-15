@@ -8,9 +8,9 @@
 typedef struct {
   String ssid;
   String password;
-} Network;
+} WiFiNetwork;
 
-Network knownNetworks[MAX_NETWORKS];
+WiFiNetwork knownNetworks[MAX_NETWORKS];
 int networkCount = 0;
 
 void setup() {
