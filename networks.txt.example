@@ -1,7 +1,0 @@
-# WiFi Networks Configuration
-# Format: SSID:PASSWORD (one per line)
-# Networks will be tried in order of signal strength
-
-MyHomeWiFi:mypassword123
-CoffeeShop:guestpass
-MobileHotspot:phone1234
