@@ -108,18 +108,24 @@ void testSentryConnection() {
   if (httpCode > 0) {
     Serial.printf("HTTP Response: %d\n", httpCode);
     
+    String payload = http.getString();
+    
     if (httpCode == 200) {
       Serial.println("✓ Sentry connection successful!");
-      String payload = http.getString();
       Serial.println("\nProjects:");
       Serial.println(payload.substring(0, 500)); // Show first 500 chars
     } else if (httpCode == 401) {
       Serial.println("✗ Authentication failed - check SENTRY_AUTH_TOKEN");
+      Serial.println("\nError details:");
+      Serial.println(payload);
     } else if (httpCode == 404) {
       Serial.println("✗ Organization not found - check SENTRY_ORG");
+      Serial.println("\nError details:");
+      Serial.println(payload);
     } else {
       Serial.println("✗ Unexpected response");
-      Serial.println(http.getString());
+      Serial.println("\nResponse body:");
+      Serial.println(payload);
     }
   } else {
     Serial.printf("✗ Connection failed: %s\n", http.errorToString(httpCode).c_str());
