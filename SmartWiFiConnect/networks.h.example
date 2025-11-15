@@ -1,0 +1,10 @@
+// Copy this file to networks.h and add your WiFi credentials
+// networks.h is in .gitignore and won't be committed
+
+const char* networks[][2] = {
+  {"MyHomeWiFi", "mypassword123"},
+  {"CoffeeShop", "guestpass"},
+  {"MobileHotspot", "phone1234"}
+};
+
+const int NETWORK_COUNT = sizeof(networks) / sizeof(networks[0]);

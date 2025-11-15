@@ -1,5 +1,6 @@
 secrets.h
 networks.txt
+networks.h
 *.swp
 *.swo
 *~

@@ -36,28 +36,18 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
    cd Cow-Tracker
    ```
 
-2. Configure WiFi networks:
+2. Configure networks for SmartWiFiConnect:
    ```bash
-   cp networks.txt.example networks.txt
-   ```
-   Edit `networks.txt` with your WiFi credentials (format: `SSID:PASSWORD`, one per line)
-
-3. Configure networks for SmartWiFiConnect:
-   ```bash
-   cd SmartWiFiConnect/data
-   cp networks.txt.example networks.txt
-   # Edit networks.txt with your WiFi credentials
+   cd SmartWiFiConnect
+   cp networks.h.example networks.h
+   # Edit networks.h with your WiFi credentials
    ```
 
-4. Upload SPIFFS data (for SmartWiFiConnect):
-   - Install [ESP32 Sketch Data Upload tool](https://github.com/me-no-dev/arduino-esp32fs-plugin)
-   - In Arduino IDE: **Tools > ESP32 Sketch Data Upload**
-
-5. Test WiFi connectivity:
+3. Test WiFi connectivity:
    - Upload `WiFiScanner/WiFiScanner.ino` to verify networks are visible
    - Upload `SmartWiFiConnect/SmartWiFiConnect.ino` to test automatic connection
 
-6. Flash to ESP32:
+4. Flash to ESP32:
    - Open the project in Arduino IDE or PlatformIO
    - Select your ESP32 board
    - Upload the firmware
