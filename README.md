@@ -1,6 +1,6 @@
 # Cow Tracker
 
-![Moo-ve-It Logo](assets/mooveit_logo.png)
+![Moo-ve-It Logo](assets/cow_farm.jpg)
 
 ## Overview
 
