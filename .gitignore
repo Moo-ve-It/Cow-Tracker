@@ -1,0 +1,6 @@
+secrets.h
+networks.txt
+*.swp
+*.swo
+*~
+.DS_Store
