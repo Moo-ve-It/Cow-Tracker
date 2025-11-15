@@ -2,6 +2,9 @@
 
 ## Core Functionality
 
+- [x] WiFi network scanning and discovery
+- [x] Smart WiFi connection with signal strength priority
+- [x] Multi-network configuration support
 - [ ] Implement robust air tag reading with retry logic
 - [ ] Add checksum validation for air tag data
 - [ ] Improve Sentry.io connection error handling and exponential backoff

@@ -8,6 +8,7 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
 
 ## Features
 
+- **Smart WiFi Connection** - Automatically connects to strongest available network from configured list
 - **Air Tag Integration** - Reads location data from air tag modules for real-time cow positioning
 - **Sentry.io Telemetry** - Sends structured JSON events to Sentry.io at regular intervals
 - **Sensor Data Collection** - Monitors battery level and optional environmental data
@@ -35,16 +36,17 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
    cd Cow-Tracker
    ```
 
-2. Configure credentials:
+2. Configure WiFi networks:
    ```bash
-   cp secrets.h.example secrets.h
+   cp networks.txt.example networks.txt
    ```
-   Edit `secrets.h` with your settings:
-   - WiFi SSID and password
-   - Sentry.io DSN
-   - Reporting interval (milliseconds)
+   Edit `networks.txt` with your WiFi credentials (format: `SSID:PASSWORD`, one per line)
 
-3. Flash to ESP32:
+3. Test WiFi connectivity:
+   - Upload `WiFiScanner.ino` to verify networks are visible
+   - Upload `SmartWiFiConnect.ino` to test automatic connection
+
+4. Flash to ESP32:
    - Open the project in Arduino IDE or PlatformIO
    - Select your ESP32 board
    - Upload the firmware
