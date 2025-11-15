@@ -5,10 +5,10 @@
 #define LED_PIN 2
 #define MAX_NETWORKS 10
 
-struct Network {
+typedef struct {
   String ssid;
   String password;
-};
+} Network;
 
 Network knownNetworks[MAX_NETWORKS];
 int networkCount = 0;
