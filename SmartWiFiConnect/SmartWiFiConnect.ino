@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <HTTPClient.h>
 #include "config.h"
 
 #define LED_PIN 2
@@ -15,6 +16,10 @@ void setup() {
   Serial.printf("Loaded %d networks\n\n", NETWORK_COUNT);
   
   connectToStrongestNetwork();
+  
+  if (WiFi.status() == WL_CONNECTED) {
+    testSentryConnection();
+  }
 }
 
 void loop() {
@@ -82,4 +87,43 @@ void connectToStrongestNetwork() {
   }
   
   Serial.println("\nNo known networks available");
+}
+
+void testSentryConnection() {
+  Serial.println("\n====================");
+  Serial.println("Testing Sentry.io Connection");
+  Serial.println("====================\n");
+  
+  HTTPClient http;
+  
+  String url = "https://sentry.io/api/0/organizations/" + String(SENTRY_ORG) + "/projects/";
+  
+  http.begin(url);
+  http.addHeader("Authorization", "Bearer " + String(SENTRY_AUTH_TOKEN));
+  
+  Serial.println("GET " + url);
+  
+  int httpCode = http.GET();
+  
+  if (httpCode > 0) {
+    Serial.printf("HTTP Response: %d\n", httpCode);
+    
+    if (httpCode == 200) {
+      Serial.println("✓ Sentry connection successful!");
+      String payload = http.getString();
+      Serial.println("\nProjects:");
+      Serial.println(payload.substring(0, 500)); // Show first 500 chars
+    } else if (httpCode == 401) {
+      Serial.println("✗ Authentication failed - check SENTRY_AUTH_TOKEN");
+    } else if (httpCode == 404) {
+      Serial.println("✗ Organization not found - check SENTRY_ORG");
+    } else {
+      Serial.println("✗ Unexpected response");
+      Serial.println(http.getString());
+    }
+  } else {
+    Serial.printf("✗ Connection failed: %s\n", http.errorToString(httpCode).c_str());
+  }
+  
+  http.end();
 }
