@@ -1,5 +1,5 @@
 #include <WiFi.h>
-#include "networks.h"
+#include "config.h"
 
 #define LED_PIN 2
 

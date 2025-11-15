@@ -5,6 +5,8 @@
 - [x] WiFi network scanning and discovery
 - [x] Smart WiFi connection with signal strength priority
 - [x] Multi-network configuration support
+- [x] Unified configuration file (config.h)
+- [ ] Implement Sentry.io API integration with Bearer token auth
 - [ ] Implement robust air tag reading with retry logic
 - [ ] Add checksum validation for air tag data
 - [ ] Improve Sentry.io connection error handling and exponential backoff

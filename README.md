@@ -36,11 +36,11 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
    cd Cow-Tracker
    ```
 
-2. Configure networks for SmartWiFiConnect:
+2. Configure settings:
    ```bash
    cd SmartWiFiConnect
-   cp networks.h.example networks.h
-   # Edit networks.h with your WiFi credentials
+   cp config.h.example config.h
+   # Edit config.h with your WiFi networks, Sentry credentials, and device settings
    ```
 
 3. Test WiFi connectivity:
@@ -54,14 +54,23 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
 
 ## Configuration
 
-Edit `secrets.h` to configure:
+Edit `SmartWiFiConnect/config.h` to configure:
 
 ```cpp
-#define WIFI_SSID "your-network"
-#define WIFI_PASSWORD "your-password"
-#define SENTRY_DSN "https://your-sentry-dsn@sentry.io/project-id"
-#define REPORT_INTERVAL 30000  // milliseconds
-#define DEVICE_ID "cow-001"
+// WiFi Networks
+const char* networks[][2] = {
+  {"Network1", "password1"},
+  {"Network2", "password2"}
+};
+
+// Sentry.io
+const char* SENTRY_ORG = "your-org-slug";
+const char* SENTRY_PROJECT = "your-project-slug";
+const char* SENTRY_AUTH_TOKEN = "your-auth-token";
+
+// Device
+const char* DEVICE_ID = "cow-001";
+const int REPORT_INTERVAL = 30000;  // milliseconds
 ```
 
 ## Data Format

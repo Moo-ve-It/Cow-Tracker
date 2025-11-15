@@ -1,0 +1,19 @@
+// Copy this file to config.h and add your credentials
+// config.h is in .gitignore and won't be committed
+
+// WiFi Networks (will connect to strongest available)
+const char* networks[][2] = {
+  {"MyHomeWiFi", "mypassword123"},
+  {"CoffeeShop", "guestpass"},
+  {"MobileHotspot", "phone1234"}
+};
+const int NETWORK_COUNT = sizeof(networks) / sizeof(networks[0]);
+
+// Sentry.io Configuration
+const char* SENTRY_ORG = "your-org-slug";
+const char* SENTRY_PROJECT = "your-project-slug";
+const char* SENTRY_AUTH_TOKEN = "your-auth-token";
+
+// Device Configuration
+const char* DEVICE_ID = "cow-001";
+const int REPORT_INTERVAL = 30000;  // milliseconds
