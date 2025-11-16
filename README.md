@@ -43,11 +43,15 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
    # Edit config.h with your WiFi networks, Sentry credentials, and device settings
    ```
 
-3. Test WiFi connectivity:
+4. Test WiFi connectivity:
    - Upload `WiFiScanner/WiFiScanner.ino` to verify networks are visible
-   - Upload `SmartWiFiConnect/SmartWiFiConnect.ino` to test automatic connection
+   - Upload `SmartWiFiConnect/SmartWiFiConnect.ino` to test automatic connection and Sentry API
 
-4. Flash to ESP32:
+5. Run the cow tracker simulator:
+   - Copy `config.h` from SmartWiFiConnect to CowTracker directory
+   - Upload `CowTracker/CowTracker.ino` to simulate 30 cows sending data
+
+6. Flash to ESP32:
    - Open the project in Arduino IDE or PlatformIO
    - Select your ESP32 board
    - Upload the firmware
