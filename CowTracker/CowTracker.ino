@@ -68,7 +68,7 @@ void loop() {
       if (now >= cows[i].nextReport) {
         sendCowData(i);
         updateCowData(i);
-        cows[i].nextReport = now + random(30000, 45000); // 30-45 seconds
+        cows[i].nextReport = now + random(300000, 600000); // 5-10 minutes
       }
     }
     
@@ -101,7 +101,7 @@ void initializeCows() {
     cows[i].temperature = random(380, 390) / 10.0; // 38.0-39.0°C
     cows[i].heartRate = random(60, 80);
     cows[i].batteryLevel = random(70, 100);
-    cows[i].nextReport = random(0, 30000); // Stagger initial reports
+    cows[i].nextReport = random(0, 300000); // Stagger initial reports over 5 minutes
     
     Serial.printf("Cow %d: %s at (%.4f, %.4f)\n", 
                   cows[i].id, cows[i].tag, cows[i].lat, cows[i].lon);
@@ -144,8 +144,13 @@ void sendCowData(int index) {
   doc["event_id"] = eventId;
   doc["timestamp"] = time(nullptr);
   doc["platform"] = "other";
-  doc["level"] = "error";
-  doc["message"] = "Cow " + String(cows[index].tag) + " location update";
+  doc["level"] = "info";
+  doc["message"] = "Location update";
+  
+  // Add fingerprint to create separate issues per cow
+  JsonArray fingerprint = doc.createNestedArray("fingerprint");
+  fingerprint.add("cow-location");
+  fingerprint.add(cows[index].tag);
   
   JsonObject extra = doc.createNestedObject("extra");
   extra["cow_id"] = cows[index].id;

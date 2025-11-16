@@ -55,7 +55,7 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
      - From DSN `https://PUBLIC_KEY@HOST/PROJECT_ID`
      - Set `SENTRY_PROJECT` to the PROJECT_ID (last number in DSN)
      - Set `SENTRY_AUTH_TOKEN` to the PUBLIC_KEY (hex string before @)
-   - Upload `CowTracker/CowTracker.ino` to simulate 30 cows sending data
+   - Upload `CowTracker/CowTracker.ino` to simulate 30 cows sending data every 5-10 minutes
 
 6. Flash to ESP32:
    - Open the project in Arduino IDE or PlatformIO
