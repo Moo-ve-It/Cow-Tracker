@@ -36,6 +36,15 @@ void setup() {
   
   initializeCows();
   connectToStrongestNetwork();
+  
+  // Configure NTP time
+  configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+  Serial.print("Waiting for NTP time sync");
+  while (time(nullptr) < 1000000000) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println(" done!");
 }
 
 void loop() {
@@ -118,7 +127,7 @@ void sendCowData(int index) {
   
   StaticJsonDocument<512> doc;
   doc["event_id"] = String(cows[index].id) + "-" + String(millis());
-  doc["timestamp"] = millis() / 1000;
+  doc["timestamp"] = time(nullptr);
   doc["platform"] = "other";
   doc["level"] = "info";
   

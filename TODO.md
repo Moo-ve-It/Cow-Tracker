@@ -6,8 +6,9 @@
 - [x] Smart WiFi connection with signal strength priority
 - [x] Multi-network configuration support
 - [x] Unified configuration file (config.h)
-- [x] Sentry.io API integration with Bearer token auth
+- [x] Sentry.io API integration with DSN-based auth
 - [x] Multi-cow simulator (30 cows with GPS coordinates)
+- [x] NTP time synchronization for accurate timestamps
 - [ ] Implement robust air tag reading with retry logic
 - [ ] Add checksum validation for air tag data
 - [ ] Improve Sentry.io connection error handling and exponential backoff

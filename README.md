@@ -9,6 +9,7 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
 ## Features
 
 - **Smart WiFi Connection** - Automatically connects to strongest available network from configured list
+- **NTP Time Sync** - Synchronizes with internet time servers for accurate timestamps
 - **Air Tag Integration** - Reads location data from air tag modules for real-time cow positioning
 - **Sentry.io Telemetry** - Sends structured JSON events to Sentry.io at regular intervals
 - **Sensor Data Collection** - Monitors battery level and optional environmental data
