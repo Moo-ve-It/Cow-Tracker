@@ -51,9 +51,10 @@ ESP32 firmware for real-time cow tracking and monitoring as part of the Moo-ve-I
 5. Run the cow tracker simulator:
    - Copy `config.h` from SmartWiFiConnect to CowTracker directory
    - Edit `config.h` with your Sentry DSN values:
+     - Get DSN from Sentry → Settings → Projects → Client Keys (DSN)
      - From DSN `https://PUBLIC_KEY@HOST/PROJECT_ID`
-     - Set `SENTRY_PROJECT` to the PROJECT_ID
-     - Set `SENTRY_AUTH_TOKEN` to the PUBLIC_KEY
+     - Set `SENTRY_PROJECT` to the PROJECT_ID (last number in DSN)
+     - Set `SENTRY_AUTH_TOKEN` to the PUBLIC_KEY (hex string before @)
    - Upload `CowTracker/CowTracker.ino` to simulate 30 cows sending data
 
 6. Flash to ESP32:

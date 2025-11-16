@@ -126,7 +126,13 @@ void sendCowData(int index) {
                  ", sentry_version=7");
   
   StaticJsonDocument<512> doc;
-  doc["event_id"] = String(cows[index].id) + "-" + String(millis());
+  
+  // Generate 32-char hex event_id (UUID format without dashes)
+  char eventId[33];
+  sprintf(eventId, "%08x%08x%08x%08x", 
+          cows[index].id, (unsigned int)millis(), 
+          (unsigned int)time(nullptr), random(0xFFFFFFFF));
+  doc["event_id"] = eventId;
   doc["timestamp"] = time(nullptr);
   doc["platform"] = "other";
   doc["level"] = "info";
