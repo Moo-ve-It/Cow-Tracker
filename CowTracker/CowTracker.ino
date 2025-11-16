@@ -162,7 +162,13 @@ void sendCowData(int index) {
   JsonArray values = exception.createNestedArray("values");
   JsonObject exc = values.createNestedObject();
   exc["type"] = "LocationUpdate";
-  exc["value"] = message;
+  
+  // Create detailed health status message
+  char healthMsg[128];
+  const char* status = (cows[index].temperature > 39.0) ? "⚠️ SICK" : "✓ Healthy";
+  sprintf(healthMsg, "%s | Battery: %d%% | Heart: %d bpm | Temp: %.1f°C", 
+          status, cows[index].batteryLevel, cows[index].heartRate, cows[index].temperature);
+  exc["value"] = healthMsg;
   
   JsonObject extra = doc.createNestedObject("extra");
   extra["cow_id"] = cows[index].id;
