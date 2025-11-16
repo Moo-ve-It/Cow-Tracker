@@ -8,6 +8,7 @@
 #define CENTER_LAT 40.7128
 #define CENTER_LON -74.0060
 #define MAX_DISTANCE_MILES 5.0
+#define MAX_ERRORS 10
 
 struct Cow {
   int id;
@@ -21,6 +22,8 @@ struct Cow {
 };
 
 Cow cows[NUM_COWS];
+int consecutiveErrors = 0;
+bool sendingDisabled = false;
 
 void setup() {
   Serial.begin(115200);
@@ -40,7 +43,7 @@ void loop() {
     connectToStrongestNetwork();
   }
   
-  if (WiFi.status() == WL_CONNECTED) {
+  if (WiFi.status() == WL_CONNECTED && !sendingDisabled) {
     unsigned long now = millis();
     
     for (int i = 0; i < NUM_COWS; i++) {
@@ -55,6 +58,12 @@ void loop() {
     delay(50);
     digitalWrite(LED_PIN, LOW);
     delay(950);
+  } else if (sendingDisabled) {
+    // Slow blink to indicate disabled state
+    digitalWrite(LED_PIN, HIGH);
+    delay(2000);
+    digitalWrite(LED_PIN, LOW);
+    delay(2000);
   }
 }
 
@@ -100,9 +109,7 @@ void updateCowData(int index) {
 void sendCowData(int index) {
   HTTPClient http;
   
-  // Parse DSN: https://{PUBLIC_KEY}@{HOST}/{PROJECT_ID}
-  // Send to: https://{HOST}/api/{PROJECT_ID}/store/
-  String url = "https://sentry.io/api/" + String(SENTRY_PROJECT) + "/store/";
+  String url = "https://o4510371565273088.ingest.us.sentry.io/api/" + String(SENTRY_PROJECT) + "/store/";
   
   http.begin(url);
   http.addHeader("Content-Type", "application/json");
@@ -135,8 +142,21 @@ void sendCowData(int index) {
   Serial.println(payload);
   
   int httpCode = http.POST(payload);
-  Serial.printf("Response: %d\n\n", httpCode);
+  Serial.printf("Response: %d\n", httpCode);
   
+  if (httpCode >= 200 && httpCode < 300) {
+    consecutiveErrors = 0;
+  } else {
+    consecutiveErrors++;
+    Serial.printf("Error count: %d/%d\n", consecutiveErrors, MAX_ERRORS);
+    
+    if (consecutiveErrors >= MAX_ERRORS) {
+      sendingDisabled = true;
+      Serial.println("\n!!! TOO MANY ERRORS - SENDING DISABLED !!!\n");
+    }
+  }
+  
+  Serial.println();
   http.end();
 }
 
