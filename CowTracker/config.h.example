@@ -12,7 +12,7 @@ const int NETWORK_COUNT = sizeof(networks) / sizeof(networks[0]);
 // Sentry.io Configuration
 // From your DSN: https://PUBLIC_KEY@o4510371565273088.ingest.us.sentry.io/PROJECT_ID
 const char* SENTRY_PROJECT = "4510371577135104";  // Project ID from DSN
-const char* SENTRY_AUTH_TOKEN = "a6a966f1845cc9975d31c22990c160d0";  // Public key from DSN
+const char* SENTRY_AUTH_TOKEN = "1eb966f1845cc9975d31c22990c160d0";  // Public key from DSN (OTLP key)
 
 // Device Configuration
 const char* DEVICE_ID = "cow-001";
