@@ -130,9 +130,7 @@ void sendCowData(int index) {
   doc["timestamp"] = time(nullptr);
   doc["platform"] = "other";
   doc["level"] = "info";
-  
-  JsonObject message = doc.createNestedObject("message");
-  message["formatted"] = "Cow " + String(cows[index].tag) + " location update";
+  doc["message"] = "Cow " + String(cows[index].tag) + " location update";
   
   JsonObject extra = doc.createNestedObject("extra");
   extra["cow_id"] = cows[index].id;
