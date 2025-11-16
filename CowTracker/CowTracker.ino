@@ -159,6 +159,9 @@ void sendCowData(int index) {
   
   if (httpCode >= 200 && httpCode < 300) {
     consecutiveErrors = 0;
+  } else if (httpCode == 403) {
+    Serial.println("Rate limited - backing off");
+    consecutiveErrors = 0; // Don't count rate limits as errors
   } else {
     consecutiveErrors++;
     Serial.printf("Error count: %d/%d\n", consecutiveErrors, MAX_ERRORS);
