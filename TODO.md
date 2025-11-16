@@ -9,9 +9,9 @@
 - [x] Sentry.io API integration with DSN-based auth
 - [x] Multi-cow simulator (30 cows with GPS coordinates)
 - [x] NTP time synchronization for accurate timestamps
+- [x] Exponential backoff for 403 errors (3s → 96s)
 - [ ] Implement robust air tag reading with retry logic
 - [ ] Add checksum validation for air tag data
-- [ ] Improve Sentry.io connection error handling and exponential backoff
 - [ ] Implement local data buffering when network is unavailable
 - [ ] Add watchdog timer for automatic recovery from hangs
 - [ ] Support multiple air tag protocols (BLE, RFID, UWB)

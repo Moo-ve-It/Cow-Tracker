@@ -23,6 +23,9 @@ struct Cow {
 
 Cow cows[NUM_COWS];
 int consecutiveErrors = 0;
+int consecutive403Errors = 0;
+unsigned long backoffDelay = 3000; // Start at 3 seconds
+unsigned long nextAllowedSend = 0;
 bool sendingDisabled = false;
 
 void setup() {
@@ -54,6 +57,12 @@ void loop() {
   
   if (WiFi.status() == WL_CONNECTED && !sendingDisabled) {
     unsigned long now = millis();
+    
+    // Check if we're in backoff period
+    if (now < nextAllowedSend) {
+      delay(100);
+      return;
+    }
     
     for (int i = 0; i < NUM_COWS; i++) {
       if (now >= cows[i].nextReport) {
@@ -159,9 +168,19 @@ void sendCowData(int index) {
   
   if (httpCode >= 200 && httpCode < 300) {
     consecutiveErrors = 0;
+    consecutive403Errors = 0;
+    backoffDelay = 3000; // Reset to 3 seconds
   } else if (httpCode == 403) {
-    Serial.println("Rate limited - backing off");
-    consecutiveErrors = 0; // Don't count rate limits as errors
+    consecutive403Errors++;
+    Serial.printf("403 error #%d - backing off for %lu ms\n", consecutive403Errors, backoffDelay);
+    
+    if (consecutive403Errors >= 10) {
+      sendingDisabled = true;
+      Serial.println("\n!!! TOO MANY 403 ERRORS - SENDING DISABLED !!!\n");
+    } else {
+      nextAllowedSend = millis() + backoffDelay;
+      backoffDelay = min(backoffDelay * 2, 96000UL); // Double, max 96 seconds
+    }
   } else {
     consecutiveErrors++;
     Serial.printf("Error count: %d/%d\n", consecutiveErrors, MAX_ERRORS);
