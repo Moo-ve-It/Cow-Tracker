@@ -100,33 +100,33 @@ void updateCowData(int index) {
 void sendCowData(int index) {
   HTTPClient http;
   
-  String url = "https://sentry.io/api/0/organizations/" + String(SENTRY_ORG) + 
-               "/issues/?project=" + String(SENTRY_PROJECT);
+  // Parse DSN: https://{PUBLIC_KEY}@{HOST}/{PROJECT_ID}
+  // Send to: https://{HOST}/api/{PROJECT_ID}/store/
+  String url = "https://sentry.io/api/" + String(SENTRY_PROJECT) + "/store/";
   
   http.begin(url);
-  http.addHeader("Authorization", "Bearer " + String(SENTRY_AUTH_TOKEN));
   http.addHeader("Content-Type", "application/json");
+  http.addHeader("X-Sentry-Auth", "Sentry sentry_key=" + String(SENTRY_AUTH_TOKEN) + 
+                 ", sentry_version=7");
   
   StaticJsonDocument<512> doc;
-  doc["id"] = cows[index].id;
-  doc["tag"] = cows[index].tag;
+  doc["event_id"] = String(cows[index].id) + "-" + String(millis());
   doc["timestamp"] = millis() / 1000;
+  doc["platform"] = "other";
+  doc["level"] = "info";
   
-  JsonObject location = doc.createNestedObject("location");
-  location["latitude"] = cows[index].lat;
-  location["longitude"] = cows[index].lon;
-  location["zone"] = "Pasture A";
+  JsonObject message = doc.createNestedObject("message");
+  message["formatted"] = "Cow " + String(cows[index].tag) + " location update";
   
-  JsonObject health = doc.createNestedObject("health");
-  health["status"] = (cows[index].temperature > 39.0) ? "sick" : "healthy";
-  health["temperature"] = cows[index].temperature;
-  health["heart_rate"] = cows[index].heartRate;
-  health["activity"] = random(0, 3) == 0 ? "resting" : "grazing";
-  
-  JsonObject sensors = doc.createNestedObject("sensors");
-  sensors["temperature"] = cows[index].temperature;
-  sensors["heart_rate"] = cows[index].heartRate;
-  sensors["battery_level"] = cows[index].batteryLevel;
+  JsonObject extra = doc.createNestedObject("extra");
+  extra["cow_id"] = cows[index].id;
+  extra["tag"] = cows[index].tag;
+  extra["latitude"] = cows[index].lat;
+  extra["longitude"] = cows[index].lon;
+  extra["temperature"] = cows[index].temperature;
+  extra["heart_rate"] = cows[index].heartRate;
+  extra["battery_level"] = cows[index].batteryLevel;
+  extra["health_status"] = (cows[index].temperature > 39.0) ? "sick" : "healthy";
   
   String payload;
   serializeJson(doc, payload);

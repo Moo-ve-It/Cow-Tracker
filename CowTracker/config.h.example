@@ -10,9 +10,9 @@ const char* networks[][2] = {
 const int NETWORK_COUNT = sizeof(networks) / sizeof(networks[0]);
 
 // Sentry.io Configuration
-const char* SENTRY_ORG = "your-org-slug";
-const char* SENTRY_PROJECT = "your-project-slug";
-const char* SENTRY_AUTH_TOKEN = "your-auth-token";
+// Get your DSN from: Settings > Projects > [Your Project] > Client Keys (DSN)
+const char* SENTRY_PROJECT = "4510371577135104";  // Project ID from DSN
+const char* SENTRY_AUTH_TOKEN = "your-public-key-from-dsn";  // Public key from DSN
 
 // Device Configuration
 const char* DEVICE_ID = "cow-001";
