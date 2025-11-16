@@ -94,7 +94,7 @@ void updateCowData(int index) {
   cows[index].heartRate += random(-3, 4);
   cows[index].heartRate = constrain(cows[index].heartRate, 55, 85);
   
-  cows[index].batteryLevel = max(50, cows[index].batteryLevel - random(0, 2));
+  cows[index].batteryLevel = max(50, cows[index].batteryLevel - (int)random(0, 2));
 }
 
 void sendCowData(int index) {
