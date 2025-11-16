@@ -160,7 +160,7 @@ void sendCowData(int index) {
   // Add exception to populate error message field in Sentry UI
   JsonObject exception = doc.createNestedObject("exception");
   JsonArray values = exception.createNestedArray("values");
-  JsonObject exc = values.createObject();
+  JsonObject exc = values.createNestedObject();
   exc["type"] = "LocationUpdate";
   exc["value"] = message;
   
