@@ -145,7 +145,12 @@ void sendCowData(int index) {
   doc["timestamp"] = time(nullptr);
   doc["platform"] = "other";
   doc["level"] = "info";
-  doc["message"] = "Location update";
+  
+  // Create descriptive message with cow tag and location
+  char message[128];
+  sprintf(message, "%s location update (%.4f, %.4f) temp: %.1f°C", 
+          cows[index].tag, cows[index].lat, cows[index].lon, cows[index].temperature);
+  doc["message"] = message;
   
   // Add fingerprint to create separate issues per cow
   JsonArray fingerprint = doc.createNestedArray("fingerprint");
